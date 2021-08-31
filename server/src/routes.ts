@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
+import { isAdmin } from "./actions/isAdmin";
+import { kreirajKorpu } from "./actions/kreirajKorpu";
 import obrisi from "./actions/obrisi";
+import { posaljiKorpu } from "./actions/posaljiKorpu";
 import vratiSve from "./actions/vratiSve";
 import { Autor } from "./entity/Autor";
 import { Knjiga } from "./entity/Knjiga";
+import { Korpa } from "./entity/Korpa";
 import { Zanr } from "./entity/Zanr";
 
 export interface Route {
@@ -26,4 +30,16 @@ export const Routes: Route[] = [{
     method: 'get',
     route: '/autor',
     actions: [vratiSve(Autor)]
+}, {
+    method: 'post',
+    route: '/korpa',
+    actions: [kreirajKorpu]
+}, {
+    method: 'get',
+    route: '/korpa',
+    actions: [isAdmin, vratiSve(Korpa)]
+}, {
+    method: 'patch',
+    route: '/korpa/:id',
+    actions: [isAdmin, posaljiKorpu]
 }]

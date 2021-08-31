@@ -5,12 +5,14 @@ import './App.css';
 import Navbar from './components/Navbar';
 import useFetch from './hooks/useFetch';
 import { Autor, Knjiga, Stavka, User, Zanr } from './model';
+import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
 import KnjigaPrikaz from './pages/KnjigaPrikaz';
 import KnjigePage from './pages/KnjigePage';
 import KorpaPage from './pages/KorpaPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import { naruciService } from './service/korpaService';
 import { checkUser, loginUser, logoutUser, registerUser } from './service/userService';
 
 function App() {
@@ -20,10 +22,14 @@ function App() {
   const [zanrovi] = useFetch<Zanr>('/zanr')
   const [stavke, setStavke] = useState<Stavka[]>([])
   const login = (username: string, password: string) => {
-    return loginUser(username, password).then(setUser)
+    return loginUser(username, password).then(() => {
+      window.location.reload();
+    })
   }
   const register = (firstName: string, lastName: string, email: string, password: string) => {
-    return registerUser(firstName, lastName, email, password).then(setUser);
+    return registerUser(firstName, lastName, email, password).then(() => {
+      window.location.reload()
+    });
   }
   const logout = async () => {
     await logoutUser();
@@ -72,6 +78,21 @@ function App() {
       })
     })
   }
+  const naruci = async (telefon: string, adresa: string) => {
+    if (!user) {
+      return;
+    }
+    return naruciService({
+      adresa,
+      telefon,
+      stavke,
+      poslata: false,
+      user
+    }).then(() => {
+      setStavke([]);
+    })
+  }
+
   useEffect(() => {
     checkUser().then(setUser).catch(() => {
 
@@ -94,8 +115,15 @@ function App() {
             <Route path='/knjige'>
               <KnjigePage zanrovi={zanrovi} autori={autori} knjige={knjige} />
             </Route>
+            {
+              user.isAdmin && (
+                <Route path='/dashboard'>
+                  <Dashboard autori={autori} zanrovi={zanrovi} knjige={knjige} />
+                </Route>
+              )
+            }
             <Route path='/korpa'>
-              <KorpaPage izmeniStavku={izmeniStavku} obrisiStavku={obrisiStavku} stavke={stavke} />
+              <KorpaPage naruci={naruci} izmeniStavku={izmeniStavku} obrisiStavku={obrisiStavku} stavke={stavke} />
             </Route>
             <Route path='/'>
               <HomePage knjige={knjige.slice(0, 3)} />

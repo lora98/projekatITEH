@@ -21,7 +21,7 @@ export default withRouter(function Navbar(props: Props & RouteComponentProps) {
                         <Menu.Item as={Link} to='/knjige'>Pretraga knjiga</Menu.Item>
                         {
                             props.user.isAdmin && (
-                                <Menu.Item as={Link} to='/admin'>Kontrolna tabla</Menu.Item>
+                                <Menu.Item as={Link} to='/dashboard'>Kontrolna tabla</Menu.Item>
                             )
                         }
                         <Menu.Menu position='right'>

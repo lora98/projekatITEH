@@ -1,16 +1,23 @@
 import React, { useState } from 'react'
-import { Button, Grid, Input, Pagination, Tab, Table } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Input, Pagination, Tab, Table } from 'semantic-ui-react'
 import { Stavka } from '../model'
+import { setInputState } from '../util';
 
 
 interface Props {
     stavke: Stavka[],
     obrisiStavku: (id: number) => void,
-    izmeniStavku: (stavka: Stavka, kolicina: number) => void
+    izmeniStavku: (stavka: Stavka, kolicina: number) => void,
+    naruci: (telefon: string, adresa: string) => Promise<void>
 }
 
 export default function KorpaPage(props: Props) {
-    const [aktivnaStrana, setAktivnaStrana] = useState(1)
+    const [aktivnaStrana, setAktivnaStrana] = useState(1);
+    const [adresa, setAdresa] = useState('');
+    const [telefon, setTelefon] = useState('')
+
+
+
     return (
         <Grid container columns='16'>
             <Grid.Row>
@@ -71,6 +78,25 @@ export default function KorpaPage(props: Props) {
                             </Table.Row>
                         </Table.Footer>
                     </Table>
+                </Grid.Column>
+            </Grid.Row>
+            <Grid.Row centered>
+                <Grid.Column width='10'>
+                    <Header textAlign='center'>
+                        <h3>
+                            Popunite podatke za kupovinu
+                        </h3>
+                    </Header>
+                    <Form onSubmit={() => {
+                        props.naruci(telefon, adresa).then(() => {
+                            alert('uspesno ste narucili')
+                        })
+
+                    }}>
+                        <Form.Input required value={adresa} onChange={setInputState(setAdresa)} label='Adresa' />
+                        <Form.Input required value={telefon} onChange={setInputState(setTelefon)} label='Broj telefona' />
+                        <Form.Button primary fluid >Naruci</Form.Button>
+                    </Form>
                 </Grid.Column>
             </Grid.Row>
         </Grid>

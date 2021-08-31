@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Container, Grid, Header, Segment } from 'semantic-ui-react'
-import KnjigaHomeCard from '../components/KnjigaHomeCard'
+import KnjigaCard from '../components/KnjigaCard'
 import { Knjiga } from '../model'
 
 
@@ -28,7 +28,7 @@ export default function HomePage(props: Props) {
                         {
                             props.knjige.map(element => {
                                 return (
-                                    <KnjigaHomeCard knjiga={element} key={element.id} />
+                                    <KnjigaCard knjiga={element} key={element.id} />
                                 )
                             })
                         }

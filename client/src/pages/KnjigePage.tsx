@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Form, Grid, Header, Pagination } from 'semantic-ui-react';
-import KnjigaHomeCard from '../components/KnjigaHomeCard';
+import KnjigaCard from '../components/KnjigaCard';
 import { Autor, Knjiga, Zanr } from '../model';
 import { setDropDownState, setInputState } from '../util';
 
@@ -84,19 +84,23 @@ export default function Knjige(props: Props) {
                                     {
                                         filtriraneKnjige.slice((aktivnaStrana - 1) * 4, aktivnaStrana * 4).map(element => {
                                             return (
-                                                <KnjigaHomeCard key={element.id} knjiga={element} />
+                                                <KnjigaCard key={element.id} knjiga={element} />
                                             )
                                         })
                                     }
                                     <Grid.Row>
-                                        <Pagination
+                                        {
+                                            filtriraneKnjige.length > 4 && (
+                                                <Pagination
 
-                                            totalPages={Math.ceil(filtriraneKnjige.length / 4)}
-                                            activePage={aktivnaStrana}
-                                            onPageChange={(e, data) => {
-                                                setAktivnaStrana(Number(data.activePage))
-                                            }}
-                                        />
+                                                    totalPages={Math.ceil(filtriraneKnjige.length / 4)}
+                                                    activePage={aktivnaStrana}
+                                                    onPageChange={(e, data) => {
+                                                        setAktivnaStrana(Number(data.activePage))
+                                                    }}
+                                                />
+                                            )
+                                        }
                                     </Grid.Row>
                                 </Grid>
                             )

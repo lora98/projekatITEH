@@ -44,6 +44,9 @@ export default withRouter(function KnjigaPrikaz(props: Props & RouteComponentPro
                             {` Autori: ${autori}`}
                         </p>
                         <p>
+                            Broj strana: {knjiga.brojStrana}
+                        </p>
+                        <p>
                             Cena: {knjiga.cena}
                         </p>
                         <p>

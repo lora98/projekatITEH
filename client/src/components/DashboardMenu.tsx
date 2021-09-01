@@ -8,6 +8,7 @@ export default function DashboardMenu() {
             <Menu.Item header>Meni</Menu.Item>
             <Menu.Item as={Link} to='/dashboard/knjige'>Knjige</Menu.Item>
             <Menu.Item as={Link} to='/dashboard/korpe'>Korpe</Menu.Item>
+            <Menu.Item as={Link} to='/dashboard/slika'>Random slika</Menu.Item>
         </Menu>
     )
 }

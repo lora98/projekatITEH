@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Button, Form, Grid, Header, Input, Pagination, Tab, Table } from 'semantic-ui-react'
-import { Stavka } from '../model'
+import React, { useState } from 'react';
+import { Button, Form, Grid, Header, Input, Pagination, Table } from 'semantic-ui-react';
+import { Stavka } from '../model';
 import { setInputState } from '../util';
 
 

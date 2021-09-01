@@ -27,3 +27,6 @@ background-image: url('https://media.wired.com/photos/5fd2c29c2a4ddaf3b6389694/1
 .marginBottom-very{
   margin-bottom: 30px !;
 }
+.marginButton{
+  margin-top: 10px !important;
+}

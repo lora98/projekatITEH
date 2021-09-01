@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
+import multer = require("multer");
 import { isAdmin } from "./actions/isAdmin";
+import { izmeniKnjigu } from "./actions/izmeniKnjigu";
+import { kreirajKnjigu } from "./actions/kreirajKnjigu";
 import { kreirajKorpu } from "./actions/kreirajKorpu";
 import obrisi from "./actions/obrisi";
 import { posaljiKorpu } from "./actions/posaljiKorpu";
+import { renameFile } from "./actions/renameFile";
 import vratiSve from "./actions/vratiSve";
 import { Autor } from "./entity/Autor";
 import { Knjiga } from "./entity/Knjiga";
@@ -14,6 +18,26 @@ export interface Route {
     route: string,
     actions: ((req: Request, res: Response, next?: any) => void | Promise<void>)[]
 }
+
+
+const upload = multer({
+    dest: '/uploads', fileFilter: function (req, file, cb) {
+        if (!file) {
+            cb(null, false)
+        } else {
+            cb(null, true);
+        }
+    }
+}).fields([
+    {
+        name: 'image',
+        maxCount: 1
+    },
+    {
+        name: 'file',
+        maxCount: 1
+    }
+])
 export const Routes: Route[] = [{
     method: 'get',
     route: '/knjiga',
@@ -42,4 +66,12 @@ export const Routes: Route[] = [{
     method: 'patch',
     route: '/korpa/:id',
     actions: [isAdmin, posaljiKorpu]
+}, {
+    method: 'patch',
+    route: '/knjiga/:id',
+    actions: [isAdmin, izmeniKnjigu]
+}, {
+    method: 'post',
+    route: '/knjiga',
+    actions: [isAdmin, upload, renameFile('image', 'image'), renameFile('file', 'file'), kreirajKnjigu]
 }]

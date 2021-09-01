@@ -43,3 +43,14 @@ export interface Stavka {
     knjiga: Knjiga,
     kolicina: number
 }
+
+export interface KnjigaDTO {
+
+    naziv: string,
+    brojStrana: number,
+    zanr: number,
+    autori: number[],
+
+    cena: number,
+    opis: string
+}

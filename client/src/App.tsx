@@ -4,7 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import './App.css';
 import Navbar from './components/Navbar';
 import useFetch from './hooks/useFetch';
-import { Autor, Knjiga, Stavka, User, Zanr } from './model';
+import { Autor, Knjiga, KnjigaDTO, Stavka, User, Zanr } from './model';
 import Dashboard from './pages/Dashboard';
 import HomePage from './pages/HomePage';
 import KnjigaPrikaz from './pages/KnjigaPrikaz';
@@ -12,6 +12,7 @@ import KnjigePage from './pages/KnjigePage';
 import KorpaPage from './pages/KorpaPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import { izmeniKnjiguService, kreirajKnjiguService, obrisiKnjiguService } from './service/knjigaService';
 import { naruciService } from './service/korpaService';
 import { checkUser, loginUser, logoutUser, registerUser } from './service/userService';
 
@@ -93,6 +94,34 @@ function App() {
     })
   }
 
+
+  const obrisiKnjigu = async (id: number) => {
+    if (id === 0) {
+      return;
+    }
+    await obrisiKnjiguService(id);
+    setKnjige(prev => {
+      return prev.filter(e => e.id !== id);
+    })
+  }
+  const izmeniKnjigu = async (data: KnjigaDTO, id: number) => {
+    const knjiga = await izmeniKnjiguService(data, id);
+    setKnjige(prev => {
+      return prev.map(element => {
+        if (element.id === id) {
+          return knjiga;
+        }
+        return element;
+
+      })
+    })
+  }
+  const kreirajKnjigu = async (data: FormData) => {
+    const knjiga = await kreirajKnjiguService(data);
+    setKnjige(prev => {
+      return [...prev, knjiga];
+    })
+  }
   useEffect(() => {
     checkUser().then(setUser).catch(() => {
 
@@ -118,7 +147,7 @@ function App() {
             {
               user.isAdmin && (
                 <Route path='/dashboard'>
-                  <Dashboard autori={autori} zanrovi={zanrovi} knjige={knjige} />
+                  <Dashboard kreiraj={kreirajKnjigu} izmeni={izmeniKnjigu} obrisi={obrisiKnjigu} autori={autori} zanrovi={zanrovi} knjige={knjige} />
                 </Route>
               )
             }

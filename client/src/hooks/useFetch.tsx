@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import { serverUrl } from "../constants";
 
 export default function useFetch<T>(path: string) {
-    const state = useState<T[]>([]);
+    const [state, setState] = useState<T[]>([]);
 
     useEffect(() => {
         axios.get(serverUrl + path).then(res => {
-            state[1](res.data);
+            setState(res.data);
         })
-    }, [])
-    return state;
+    }, [path])
+    return [state, setState] as [T[], React.Dispatch<React.SetStateAction<T[]>>];
 
 }

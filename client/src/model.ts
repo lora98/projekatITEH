@@ -28,7 +28,6 @@ export interface User {
     isAdmin: boolean,
 
 }
-
 export interface Korpa {
     id?: number,
     user: User,
@@ -37,13 +36,11 @@ export interface Korpa {
     telefon: string,
     stavke: Stavka[]
 }
-
 export interface Stavka {
     id?: number,
     knjiga: Knjiga,
     kolicina: number
 }
-
 export interface KnjigaDTO {
 
     naziv: string,

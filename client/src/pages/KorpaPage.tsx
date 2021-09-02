@@ -30,35 +30,36 @@ export default function KorpaPage(props: Props) {
                                 <Table.HeaderCell>Kolicina</Table.HeaderCell>
                                 <Table.HeaderCell>Ukupno</Table.HeaderCell>
                                 <Table.HeaderCell></Table.HeaderCell>
-                                <Table.HeaderCell></Table.HeaderCell>
+
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
                             {
                                 props.stavke.slice((aktivnaStrana - 1) * 4, aktivnaStrana * 4).map(element => {
-                                    return <Table.Row key={element.knjiga.id}>
-                                        <Table.Cell>{element.knjiga.naziv}</Table.Cell>
-                                        <Table.Cell>{element.knjiga.cena}</Table.Cell>
-                                        <Table.Cell>
-                                            <Input min='1' type='number' value={element.kolicina} onChange={(e) => {
-                                                const value = e.currentTarget.value;
-                                                props.izmeniStavku(element, Number(value));
-                                            }} />
-                                        </Table.Cell>
-                                        <Table.Cell>{element.kolicina * element.knjiga.cena}</Table.Cell>
+                                    return (
+                                        <Table.Row key={element.knjiga.id}>
+                                            <Table.Cell>{element.knjiga.naziv}</Table.Cell>
+                                            <Table.Cell>{element.knjiga.cena}</Table.Cell>
+                                            <Table.Cell>
+                                                <Input min='1' type='number' value={element.kolicina} onChange={(e) => {
+                                                    const value = e.currentTarget.value;
+                                                    props.izmeniStavku(element, Number(value));
+                                                }} />
+                                            </Table.Cell>
+                                            <Table.Cell>{element.kolicina * element.knjiga.cena}</Table.Cell>
 
-                                        <Table.Cell>
-                                            <Button negative icon='remove' onClick={() => {
-                                                props.obrisiStavku(element.knjiga.id!)
-                                            }} />
-                                        </Table.Cell>
-                                    </Table.Row>
+                                            <Table.Cell>
+                                                <Button negative icon='remove' onClick={() => {
+                                                    props.obrisiStavku(element.knjiga.id!)
+                                                }} />
+                                            </Table.Cell>
+                                        </Table.Row>)
                                 })
                             }
                         </Table.Body>
                         <Table.Footer>
                             <Table.Row>
-                                <Table.HeaderCell colSpan='3'>
+                                <Table.HeaderCell colSpan='2'>
                                     <Pagination
                                         totalPages={Math.ceil(props.stavke.length / 4)}
                                         activePage={aktivnaStrana}
@@ -95,7 +96,7 @@ export default function KorpaPage(props: Props) {
                     }}>
                         <Form.Input required value={adresa} onChange={setInputState(setAdresa)} label='Adresa' />
                         <Form.Input required value={telefon} onChange={setInputState(setTelefon)} label='Broj telefona' />
-                        <Form.Button primary fluid >Naruci</Form.Button>
+                        <Form.Button disabled={props.stavke.length === 0} primary fluid >Naruci</Form.Button>
                     </Form>
                 </Grid.Column>
             </Grid.Row>

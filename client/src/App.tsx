@@ -22,8 +22,10 @@ function App() {
   const [autori] = useFetch<Autor>('/autor');
   const [zanrovi] = useFetch<Zanr>('/zanr')
   const [stavke, setStavke] = useState<Stavka[]>([])
+
+
   const login = (username: string, password: string) => {
-    return loginUser(username, password).then(() => {
+    loginUser(username, password).then(() => {
       window.location.reload();
     })
   }

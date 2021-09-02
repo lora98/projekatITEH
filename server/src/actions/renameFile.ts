@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as fs from 'fs';
 import * as path from 'path';
-export function renameFile(name: string, fliename: string) {
+export function renameFile(name: string) {
 
     return function handleUpload(request: Request, res: Response, next?: any) {
 
@@ -9,11 +9,11 @@ export function renameFile(name: string, fliename: string) {
             next();
             return;
         }
-        if (!request.files[fliename]) {
+        if (!request.files[name]) {
             next();
             return;
         }
-        const file = request.files[fliename][0];
+        const file = request.files[name][0];
         const tempPath = file.path;
         const targetPath = path.resolve('uploads/' + file.originalname);
         const data = request.body;

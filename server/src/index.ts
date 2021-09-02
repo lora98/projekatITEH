@@ -1,16 +1,13 @@
+import * as cors from 'cors';
+import * as express from "express";
+import * as session from 'express-session';
+import * as fs from 'fs';
+import * as https from 'https';
 import "reflect-metadata";
 import { createConnection, getRepository } from "typeorm";
-import * as express from "express";
-import * as session from 'express-session'
-import { Routes } from "./routes";
-import * as cors from 'cors'
-import * as https from 'https'
-import * as fs from 'fs'
-import * as multer from 'multer';
-import * as path from 'path';
 import { User } from "./entity/User";
+import { Routes } from "./routes";
 
-const upload = multer({ dest: path.resolve('img/') })
 
 createConnection().then(async connection => {
     const key = fs.readFileSync('./key.pem', 'utf8');
@@ -116,7 +113,7 @@ createConnection().then(async connection => {
         key: key,
         cert: cert,
     }, app)
-    server.listen(process.env.PORT || 4000, () => console.log('app is listening'))
+    server.listen(4000, () => console.log('app is listening'))
 
 
 

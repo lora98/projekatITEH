@@ -18,7 +18,7 @@ export default function Knjige(props: Props) {
     const [autori, setAutori] = useState<number[]>([])
     const [aktivnaStrana, setAktivnaStrana] = useState(1);
     const validnaKnjiga = (knjiga: Knjiga) => {
-        return knjiga.naziv.includes(naziv) && (zanrovi.length === 0 || zanrovi.includes(knjiga.zanr.id)) && (autori.length === 0 || knjiga.autori.reduce((acc, element) => {
+        return knjiga.naziv.toLocaleLowerCase().includes(naziv.toLocaleLowerCase()) && (zanrovi.length === 0 || zanrovi.includes(knjiga.zanr.id)) && (autori.length === 0 || knjiga.autori.reduce((acc, element) => {
             return acc || autori.includes(element.id)
         }, false as boolean))
     }

@@ -11,7 +11,7 @@ export default function RandomSlika() {
         axios.get('https://picsum.photos/1200/720', {
             withCredentials: false
         }).then(res => {
-            console.log(res);
+
             setUrl(res.request.responseURL)
         })
     }

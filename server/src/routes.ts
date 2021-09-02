@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import multer = require("multer");
+import * as multer from "multer";
 import { isAdmin } from "./actions/isAdmin";
 import { izmeniKnjigu } from "./actions/izmeniKnjigu";
 import { kreirajKnjigu } from "./actions/kreirajKnjigu";
@@ -45,7 +45,7 @@ export const Routes: Route[] = [{
 }, {
     method: 'delete',
     route: '/knjiga/:id',
-    actions: [obrisi(Knjiga)]
+    actions: [isAdmin, obrisi(Knjiga)]
 }, {
     method: 'get',
     route: '/zanr',
@@ -73,5 +73,5 @@ export const Routes: Route[] = [{
 }, {
     method: 'post',
     route: '/knjiga',
-    actions: [isAdmin, upload, renameFile('image', 'image'), renameFile('file', 'file'), kreirajKnjigu]
+    actions: [isAdmin, upload, renameFile('image'), renameFile('file'), kreirajKnjigu]
 }]

@@ -56,8 +56,8 @@ export default function KnjigaForma(props: Props) {
                 data.append('naziv', naziv)
                 data.append('opis', opis)
                 data.append('zanr', zanrId + '')
-                if (!fileRef.current) {
-                    alert('nema ref');
+                if (!imageRef.current) {
+
                     return;
                 }
                 const fileElement = fileRef.current?.lastChild?.lastChild as HTMLInputElement;

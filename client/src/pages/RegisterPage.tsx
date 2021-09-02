@@ -21,9 +21,7 @@ export default withRouter(function RegisterPage(props: Props & RouteComponentPro
                     return;
                 }
                 setRepepatError('');
-                props.onSubmit(firstName, lastName, email, password).then(() => {
-                    props.history.push('/')
-                })
+                props.onSubmit(firstName, lastName, email, password)
             }}>
                 <Form.Input required value={firstName} onChange={setInputState(setFirstName)} label='Ime' />
                 <Form.Input required value={lastName} onChange={setInputState(setLastName)} label='Prezime' />

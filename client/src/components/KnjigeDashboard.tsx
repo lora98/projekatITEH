@@ -28,18 +28,20 @@ export default function KnjigeDashboard(props: Props) {
                     aktivnaKnjigaId === 0 ? 'Kreiraj knjigu' : 'Izmeni knjigu'
                 }
             </Header>
-            <KnjigaForma obrisi={async () => {
-                await props.obrisi(aktivnaKnjigaId)
-                setAktivnaKnjigaId(0);
-            }} onSubmit={async (data) => {
-                if (aktivnaKnjigaId === 0) {
-                    props.kreiraj(data)
-                } else {
-                    props.izmeni(data, aktivnaKnjigaId).then(() => {
-                        setAktivnaKnjigaId(0);
-                    })
-                }
-            }} autori={props.autori} knjiga={props.knjige.find(e => e.id === aktivnaKnjigaId)} zanrovi={props.zanrovi} />
+            <KnjigaForma
+                obrisi={async () => {
+                    await props.obrisi(aktivnaKnjigaId)
+                    setAktivnaKnjigaId(0);
+                }}
+                onSubmit={async (data) => {
+                    if (aktivnaKnjigaId === 0) {
+                        props.kreiraj(data)
+                    } else {
+                        props.izmeni(data, aktivnaKnjigaId).then(() => {
+                            setAktivnaKnjigaId(0);
+                        })
+                    }
+                }} autori={props.autori} knjiga={props.knjige.find(e => e.id === aktivnaKnjigaId)} zanrovi={props.zanrovi} />
         </div>
     )
 }

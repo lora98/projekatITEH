@@ -13,10 +13,11 @@ interface Props {
 export default withRouter(function Navbar(props: Props & RouteComponentProps) {
     return (
         <Menu borderless fluid >
+            <Menu.Item header> E biblioteka</Menu.Item>
             {
                 props.user ? (
                     <>
-                        <Menu.Item header> E biblioteka</Menu.Item>
+
                         <Menu.Item as={Link} to='/'>Pocetna strana</Menu.Item>
                         <Menu.Item as={Link} to='/knjige'>Pretraga knjiga</Menu.Item>
                         {
